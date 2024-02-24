@@ -12,26 +12,35 @@ const player1el=document.querySelector('.player--1');
 // const score =[0,0];
 // initial condition to set all score to zero
 
-
+//changes
 
 score0.textContent=0;
 score1.textContent=0;
-die.classList.add('hidden');
-let cur=0;
-let activep=0;
-let res=0;let res2=0
-let playing=true;
-let pla=0;
+
+let cur;
+let activep;
+let res;
+let res2;
+let playing;
+let pla;
 const inti=function()
 {
+    cur=0;
+    activep=0;
+    res=0;
+    res2=0
+    playing=true;
+    pla=0;
     score0.textContent=0;
     score1.textContent=0;
     cur1.textContent=0;
     cur0.textContent=0;
+    // playing=true;
+    die.classList.add('hidden');
     player0el.classList.remove('player--winner');
     player0el.classList.add('player--active')
     player1el.classList.remove('player--winner');
-    player1el.classList.add('player--active');
+    player1el.classList.remove('player--active');
 }
 inti();
 btnroll.addEventListener('click',function()
@@ -54,10 +63,13 @@ btnroll.addEventListener('click',function()
 })
 const switchplayer =function()
 {
+
+    document.getElementById(`current--${activep}`).textContent = 0;
+    // currentScore = 0;
     if(activep===0)
     {
         res+=cur
-        if(res>=20)
+        if(res>=100)
         {
             inti();
         }
@@ -65,17 +77,38 @@ const switchplayer =function()
     }
     else{
         res2+=cur
-        if(res2>=20)
+        if(res2>=100)
         {
             inti();
         }
         document.getElementById(`score--${activep}`).textContent=res2;
     }
-    document.getElementById(`current--${activep}`).textContent = 0;
     cur=0;
     activep = activep === 0 ? 1 : 0;
     player0el.classList.toggle('player--active');
     player1el.classList.toggle('player--active');
+    // if(activep===0)
+    // {
+    //     res+=cur
+    //     if(res>=100)
+    //     {
+    //         inti();
+    //     }
+    //     document.getElementById(`score--${activep}`).textContent=res;
+    // }
+    // else{
+    //     res2+=cur
+    //     if(res2>=100)
+    //     {
+    //         inti();
+    //     }
+    //     document.getElementById(`score--${activep}`).textContent=res2;
+    // }
+    // document.getElementById(`current--${activep}`).textContent = 0;
+    // cur=0;
+    // activep = activep === 0 ? 1 : 0;
+    // player0el.classList.toggle('player--active');
+    // player1el.classList.toggle('player--active');
 }
 
 btnhold.addEventListener('click',function()
@@ -94,28 +127,33 @@ btnhold.addEventListener('click',function()
         document.getElementById(`score--${activep}`).textContent=res2;
         cur=0;
     }
-    if(res>=20  || res2>=20)
+    if(res>=100 || res2>=100)
     {
-        if(res>=20)
+        if(res>=100)
         {
+            playing=false;
             pla=0;
+            die.classList.add('hidden');
+            document.querySelector(`.player--${pla}`).classList.add('player--winner');
+            document.querySelector(`.player--${pla}`).classList.remove('player--active');
+
+
         }
         else{
             pla=1;
+            playing=false;
+            die.classList.add('hidden');
+            document.querySelector(`.player--${pla}`).classList.add('player--winner');
+            document.querySelector(`.player--${pla}`).classList.remove('player--active');
         }
-        document.querySelector(`.player--${pla}`).classList.add('player--winner');
-        document.querySelector(`.player--${pla}`).classList.remove('player--active');
-        playing=false;
-        die.classList.remove('hidden');
-        inti();
+        
+        
     }
     else{
     switchplayer();
     }
-}
-else{
-    reset();
-}
+
+    }
 })
 
 const reset=function()
@@ -130,5 +168,5 @@ const reset=function()
     playing=true;
 
 } 
-btnnew.addEventListener('click',reset);
+btnnew.addEventListener('click',inti);
 // console.log(ran);
